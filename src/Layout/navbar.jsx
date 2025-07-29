@@ -61,12 +61,7 @@ const Navbar = () => {
                   aria-current="page"
                   href="#"
                 >
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-white" href="#">
-                  Tasks
+                  Drag. Drop. Dominate Your Workflow.
                 </a>
               </li>
             </ul>
