@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { taskListState } from "../recoilState/state.js";
 
 const Navbar = () => {
   const [taskList, setTaskList] = useRecoilState(taskListState);
   const [task, setTask] = useState("");
-
+    useEffect(() => {
+    const stored = localStorage.getItem("Todo");
+    if (stored) {
+      setTaskList(JSON.parse(stored));
+    }
+  }, []);
   const HandleInput = (e) => {
     setTask(e.target.value);
   };
   const HandleSubmit = (e) => {
     e.preventDefault();
-    setTaskList([...taskList, { id: Date.now(), task: task, status: "todo" }]);
+    setTaskList([...taskList, { id: Date.now(), task: task, status: "Todo" }]);
+    localStorage.setItem("Todo", JSON.stringify(taskList));
     setTask("");
   };
 

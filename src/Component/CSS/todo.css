@@ -17,6 +17,10 @@
     margin-bottom: 9px;
 }
 
+.card:hover{
+  cursor:grab;
+}
+
 .btn-outline-primary{
     color: #5420f1;
     border: 1px solid #5420f1;
@@ -29,6 +33,38 @@
 .buttonWrapper{
     gap: 40px;
 }
+.menu {
+    padding: 8px;
+    font-size: 13px;
+    border: 2px solid transparent;
+    background-color: transparent;
+    color: #5420f1;
+    border: 1px solid #5420f1;;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    appearance: none;
+  }
+
+  .menu:hover {
+    background-color: #5420f1;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .menu:focus {
+    outline: none;
+    border-color: #5420f1;
+  }
+
+  option {
+    color: black;
+    background-color: transparent;
+  }
+
+  option:hover {
+    color: blue;
+    background-color:  #5420f1;
+  }
 
 .todoHeader{
     height: 75px;
