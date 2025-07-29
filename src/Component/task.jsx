@@ -2,33 +2,24 @@ import { Trash } from "lucide-react";
 import { useRecoilState } from "recoil";
 import { taskListState } from "../recoilState/state.js";
 import { useDraggable } from "@dnd-kit/core";
+import ButtonWithCircle from "./button.jsx";
+
 
 const Task = ({ t }) => {
   const [taskList, setTaskList] = useRecoilState(taskListState);
-
-  const handleStatusChange = (e, id) => {
-    const newStatus = e.target.value;
-    const updatedList = taskList.map((t) =>
-      t.id === id ? { ...t, status: newStatus } : t
-    );
-    setTaskList(updatedList);
-    localStorage.setItem("Todo", JSON.stringify(updatedList));
-  };
-
-  const deleteHandle = (id) => {
-    setTaskList(
-      taskList.filter((t) => {
-        return t.id !== id;
-      })
-    );
-    localStorage.setItem("Todo", JSON.stringify(taskList));
-  };
-
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: t.id,
   });
 
-  const style = transform ? {transform: `translate(${transform.x}px, ${transform.y}px)`}: undefined;
+  const style = transform
+    ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
+    : undefined;
+
+  const deleteHandle = (id) => {
+    const updatedList = taskList.filter((task) => task.id !== id);
+    setTaskList(updatedList);
+    localStorage.setItem("Todo", JSON.stringify(updatedList));
+  };
 
   return (
     <div
@@ -43,19 +34,14 @@ const Task = ({ t }) => {
           <h5 className="card-title">{t.task}</h5>
         </div>
         <div className="buttonWrapper">
-          <select
-            className="me-2 menu"
-            onChange={(e) => handleStatusChange(e, t.id)}
-            value={t.status}
-          >
-            <option value="todo">Todo</option>
-            <option value="progress">In-Progress</option>
-            <option value="complete">Complete</option>
-          </select>
+          <ButtonWithCircle task={t}/>
           <button
-            type="button"
             className="btn btn-outline-primary"
-            onClick={() => deleteHandle(t.id)}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteHandle(t.id);
+            }}
           >
             <Trash size={22} strokeWidth={1.75} />
           </button>
